@@ -13,12 +13,6 @@
             <input name="slug" type="text" class="form-control" id="slug" placeholder="slug" value="@yield('slug')">
         </div>
 
-        <div class="form-group {{Route::getCurrentRoute()->named('blog-create') ? 'hide' : ''}}">
-            <label for="author_id">Author</label>
-            <input name="author_id" type="text" class="form-control" id="author_id" placeholder="For Example: 1"
-                   value="@yield('author_id')">
-        </div>
-
         <div class="form-group">
             <label for="category_id">Category Id</label>
             <input name="category_id" type="text" class="form-control" id="category_id" placeholder="For Example: 1"

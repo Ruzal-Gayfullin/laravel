@@ -24,7 +24,8 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-//         'picture' =>'required|mimes:jpeg,jpg,gif|dimensions:min_width=200,max_width=1000,min_height=200,max_height==1000',
+            'title' =>'required',
+         'picture' =>'mimes:jpeg,jpg,gif|dimensions:min_width=200,max_width=1000,min_height=200,max_height==1000',
         ];
     }
 }

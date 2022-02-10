@@ -30,14 +30,10 @@ class MainController extends Controller
         $user = User::where(['email' => $email])->first();
 
         $password_is_correct = Hash::check($request->input('password'), $user->password);
-//        echo '<pre>';
-//        print_r($password);
-//        echo '</pre>';
-//        die;
+
         if ($user && $password_is_correct) {
             Auth::login($user);
         }
-
 
         return redirect()->route('home');
     }
@@ -45,7 +41,7 @@ class MainController extends Controller
     public function LogOut()
     {
         Auth::logout();
-        return redirect()->route('welcome');
+        return redirect()->route('all-blogs');
     }
 
 }

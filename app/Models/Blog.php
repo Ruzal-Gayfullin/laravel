@@ -28,7 +28,6 @@ class Blog extends Model
     protected $table = 'blog';
 
     public const PICTURE_PATH = '/blogs';
-    public const FULL_PICTURE_PATH = FileHelper::FILES_PATH . DIRECTORY_SEPARATOR . 'blogs';
 
     public function categories()
     {
@@ -42,7 +41,7 @@ class Blog extends Model
 
     public function getPicturePath()
     {
-        return FileHelper::FILES_PATH . Blog::PICTURE_PATH . DIRECTORY_SEPARATOR . $this->slug;
+        return FileHelper::FILES_PATH . Blog::PICTURE_PATH . '/' . $this->slug;
     }
 
     public function getPicture()

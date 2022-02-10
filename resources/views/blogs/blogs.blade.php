@@ -43,8 +43,10 @@
                     <img width="100" height="100" src="{{asset('/storage/files/system/no.jpg')}}" alt="">
                     <h1 style="margin-top: 50px">You don't have blogs</h1>
                 </div>
-
             @endif
+        </div>
+        <div class="container">
+            {{$blogs->links('vendor.pagination.bootstrap-4')}}
         </div>
     </div>
 @endsection

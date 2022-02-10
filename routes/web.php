@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//})->name('welcome');
 
 Route::get('/login', function () {
     return view('login');
@@ -53,6 +53,8 @@ Route::match(['GET', 'POST'],'blog/update/{slug}',[\App\Http\Controllers\BlogCon
 
 Route::match(['GET', 'POST'],'/new-blog/create',[\App\Http\Controllers\BlogController::class,"CreateBlog"])->name('blog-create')
     ->middleware('auth');
+
+Route::get('/blogs',[\App\Http\Controllers\BlogController::class,'AllBlogs'])->name('all-blogs');
 
 
 
