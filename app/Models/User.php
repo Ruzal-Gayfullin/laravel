@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\UserPasswordCast;
 use App\Helpers\FileHelper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,8 +32,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name',
+        'last_name',
         'email',
         'password',
+        'remember_token'
     ];
 
     /**
@@ -52,9 +55,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => UserPasswordCast::class,
     ];
-
-    protected $table = 'users';
 
 
     public function blogs()

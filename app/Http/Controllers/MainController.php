@@ -2,46 +2,49 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\auth\LogInRequest;
+use App\Http\Requests\auth\RegistrationRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Requests\RegistrationRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
 
 class MainController extends Controller
 {
-    public function Register(RegistrationRequest $request)
+    /**
+     * @param RegistrationRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function Register(RegistrationRequest $request): \Illuminate\Http\RedirectResponse
     {
-
-        $user = new User();
-        $user->first_name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-
-        $user->save();
-        Auth::login($user);
-
-        return redirect()->route('home');
-    }
-
-    public function LogIn(Request $request)
-    {
-        $email = $request->input('email');
-        $user = User::where(['email' => $email])->first();
-
-        $password_is_correct = Hash::check($request->input('password'), $user->password);
-
-        if ($user && $password_is_correct) {
+        $user = User::create($request->validationData());
+        if ($user) {
             Auth::login($user);
+            return redirect()->route('home');
         }
 
-        return redirect()->route('home');
+        return redirect(route('register'))->with('error','Something went wrong');
+    }
+
+    /**
+     * @param LogInRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function LogIn(LogInRequest $request)
+    {
+        $fields = $request->only(['email', 'password']);
+
+        if (Auth::attempt($fields, $request->has('remember'))) {
+            return redirect()->route('home');
+        }
+
+        return redirect(route('login'))->with('error','Email or Password is wrong');
     }
 
     public function LogOut()
     {
         Auth::logout();
-        return redirect()->route('all-blogs');
+        return redirect()->route('login');
     }
 
 }
