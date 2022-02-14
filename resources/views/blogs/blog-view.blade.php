@@ -48,7 +48,7 @@ $user = @auth()->user()
                                 <div class="latest-post-aside media">
                                     <div class="lpa-left media-body">
                                         <div class="lpa-title">
-                                            <h5><a href="{{route('blog-view',$l_blog->slug)}}">{{$l_blog->title}}</a></h5>
+                                            <h5><a href="{{route('blog.blog-view',$l_blog->slug)}}">{{$l_blog->title}}</a></h5>
                                         </div>
                                         <div class="lpa-meta">
                                             <a class="name" href="#">
@@ -60,7 +60,7 @@ $user = @auth()->user()
                                         </div>
                                     </div>
                                     <div class="lpa-right">
-                                        <a href="{{route('blog-view',$l_blog->slug)}}">
+                                        <a href="{{route('blog.blog-view',$l_blog->slug)}}">
                                             <img src="{{$l_blog->getPicture()}}"  width="120" height="100">
                                         </a>
                                     </div>

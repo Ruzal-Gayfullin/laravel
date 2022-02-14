@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <h1>Create Blog </h1>
-        @section('route'){{route('blog-create')}} @endsection
+        @section('route'){{route('blog.blog-create')}} @endsection
     </div>
 @endsection
 

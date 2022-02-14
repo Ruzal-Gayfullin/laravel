@@ -7,13 +7,13 @@ $user = @auth()->user()
 
 @section('content')
     <div class="container box-shadow">
-{{--        <h1>Home Page</h1>--}}
+      @include('errors.form-errors')
         <div class="row mb-2">
             <div class="col-md-3">
                 <ul>
                     <li class="{{ Route::getCurrentRoute()->named('home') ? 'active' : '' }}"><a href="{{route('home')}}">My Page</a></li>
-                    <li class="{{Route::getCurrentRoute()->named('blog') ? 'active' : '' }}"><a href="{{route('blog')}}">My Blogs</a></li>
-                    <li class="{{ Route::getCurrentRoute()->named('blog-create') ? 'active' : '' }}"><a href="{{route('blog-create')}}">Create New Post</a></li>
+                    <li class="{{Route::getCurrentRoute()->named('blog.my') ? 'active' : '' }}"><a href="{{route('blog.my')}}">My Blogs</a></li>
+                    <li class="{{ Route::getCurrentRoute()->named('blog.blog-form') ? 'active' : '' }}"><a href="{{route('blog.blog-form')}}">Create New Post</a></li>
                 </ul>
             </div>
             <div class="col-md-9">

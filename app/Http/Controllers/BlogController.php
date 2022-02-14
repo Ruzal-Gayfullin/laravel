@@ -7,6 +7,7 @@ use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,27 +18,25 @@ use Intervention\Image\Image;
  */
 class BlogController extends Controller
 {
-    public function CreateBlog(Request $request)
+    public function ShowBlogForm()
+    {
+        return view('blogs.blog-create');
+    }
+
+    public function CreateBlog(BlogRequest $request)
     {
         $data = $request->all();
-        $blog = new Blog();
 
-        if (count($data)) {
-            $blog->title = $data['title'];
-            $blog->slug = $data['slug'];
-            $blog->author_id = \auth()->user()->id;
-            $blog->text = $data['text'];
-            $blog->description = $data['description'];
-            $blog->category_id = $data['category_id'];
+        $blog = Blog::create(array_merge($data, [
+            'author_id' => \auth()->id(),
+            'picture' => FileHelper::SaveImage($data['image'], (new Blog(['slug' => $data['slug']]))->getPicturePath()),
+        ]));
 
-            if (array_key_exists('image', $data) && $picture_name = FileHelper::SaveImage($data['image'], $blog->getPicturePath())) {
-                $blog->picture = $picture_name;
-            }
-            if ($blog->save()) {
-                return redirect()->route('blog-view', $blog->slug);
-            }
+        if ($blog->save()) {
+            return redirect()->route('blog.blog-view', $blog->slug);
         }
-        return view('blogs/blog-create');
+
+        return view('blogs.blog-update');
     }
 
     public function MyBlogs()
@@ -46,7 +45,7 @@ class BlogController extends Controller
 
         $blogs = $user->blogs()->paginate(10);
 
-        return view('blogs/blogs', ['blogs' => $blogs]);
+        return view('blogs.myblogs', ['blogs' => $blogs]);
     }
 
     public function BlogView($slug)
@@ -54,7 +53,7 @@ class BlogController extends Controller
         $blog = Blog::where(['slug' => $slug])->first();
         $blogs = Blog::with('author')->where('slug', '!=', $slug)->inRandomOrder()->limit(5)->get();
 
-        return view('blogs/blog-view', ['blog' => $blog, 'latest_blogs' => $blogs]);
+        return view('blogs.blog-view', ['blog' => $blog, 'latest_blogs' => $blogs]);
     }
 
     public function BlogUpdate($slug, Request $request)
@@ -69,13 +68,12 @@ class BlogController extends Controller
 
         $data = $request->all();
 
-        if (count($data)) {
+        if (count($data) && $request->isMethod('post')) {
             $blog->title = $data['title'];
 
-            if ($blog->slug !==$data['slug'])
-            {
-                $old_path = FileHelper::getStoragePath(true).Blog::PICTURE_PATH.DIRECTORY_SEPARATOR.$blog->slug;
-                rename($old_path, (Str::replace($blog->slug,'',$old_path).$data['slug']));
+            if ($blog->slug !== $data['slug']) {
+                $old_path = FileHelper::getStoragePath(true) . Blog::PICTURE_PATH . DIRECTORY_SEPARATOR . $blog->slug;
+                rename($old_path, (Str::replace($blog->slug, '', $old_path) . $data['slug']));
             }
             $blog->slug = $data['slug'];
             $blog->text = $data['text'];

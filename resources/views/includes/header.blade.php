@@ -12,8 +12,8 @@
     @endif
 
     @if (route('home') !== $current_route)
-        @if (route('blog') !== $current_route)
-        <a class="p-2 text-dark" href="{{route('blog')}}">My Blogs</a>
+        @if (route('blog.my') !== $current_route)
+        <a class="p-2 text-dark" href="{{route('blog.my')}}">My Blogs</a>
     @endif
 
         @if (route('home') !== $current_route)

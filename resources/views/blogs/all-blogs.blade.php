@@ -22,13 +22,13 @@
                                     <strong class="d-inline-block mb-2 text-primary">{{$category->name}}</strong>
                                 @endforeach
                                 <h3 class="mb-0">
-                                    <a class="text-dark" href="{{route('blog-view',$blog->slug)}}">{{$blog->title}}</a>
+                                    <a class="text-dark" href="{{route('blog.blog-view',$blog->slug)}}">{{$blog->title}}</a>
                                 </h3>
                                 <div class="mb-1 text-muted">{{$blog->created_at}}</div>
                                 <div class="card-text mb-auto wrap-text">{{$blog->description}}</div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{route('blog-view',$blog->slug)}}" class="btn btn-sm btn-outline-secondary">View</a>
+                                        <a href="{{route('blog.blog-view',$blog->slug)}}" class="btn btn-sm btn-outline-secondary">View</a>
                                     </div>
                                 </div>
                             </div>

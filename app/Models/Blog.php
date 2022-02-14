@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\FileHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -29,6 +30,16 @@ class Blog extends Model
 
     public const PICTURE_PATH = '/blogs';
 
+    protected $fillable = [
+        'title', 'slug',
+        'author_id', 'category_id',
+        'text', 'description',
+        'picture',
+
+    ];
+    /**
+     * @var array
+     */
     public function categories()
     {
         return $this->hasMany(BlogCategory::class, 'id', 'category_id');
