@@ -17,12 +17,15 @@ class BlogTable extends Migration
            $table->id();
            $table->string('title',100)->comment('Заголовок блога');
            $table->string('slug')->unique()->index()->comment('Уникальное имя блога');
-           $table->foreignId('author_id')->comment('Id создателя блога');
+           $table->unsignedBigInteger('author_id')->comment('Id создателя блога');
            $table->text('text')->comment('Текст блога');
            $table->string('description',255)->comment('Короткий текст блога');
            $table->string('picture')->comment('Картинка блога');
-           $table->foreignId('category_id')->comment('Id категории блога');
+           $table->unsignedBigInteger('category_id')->comment('Id категории блога');
            $table->timestamps();
+
+           $table->foreign('category_id')->references('id')->on('blog_category')->onDelete('cascade');
+           $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
        });
     }
 
