@@ -9,3 +9,10 @@ Data Base Settings
 * DB_DATABASE=laravel
 * DB_USERNAME=root
 * DB_PASSWORD=root
+
+Cache
+
+* php artisan cache:clear
+* php artisan route:cache
+* php artisan view:clear
+* php artisan config:cache
