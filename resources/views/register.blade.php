@@ -45,8 +45,8 @@
 
             <div class="form-label-group">
                 <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" value="{{old('password')}}"
-                       placeholder="Password" required="">
+                <input type="password" name="password" id="inputPassword" class="form-control"
+                       placeholder="Password">
                 <x-field-error field="password" message="{{$message ?? ''}}"></x-field-error>
             </div>
             <br>
